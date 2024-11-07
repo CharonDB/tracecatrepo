@@ -1,0 +1,28 @@
+type: action
+definition:
+  title: Get DarkLayer alerts
+  description: Gets the DarkLayer alerts for a specific client
+  display_group: Heimdall
+  namespace: integrations.heimdall
+  name: get_darklayer_alerts
+  secrets:
+    - name: heimdall
+      keys: ["HEIMDALL_API_KEY","HEIMDALL_CUSTOMER_ID"]
+  expects:
+    client_id:
+      type: str
+      description: The ID of the client
+      default: null
+  steps:
+    - ref: get_darklayer_alerts
+      action: core.http_request
+      args:
+        url: https://rc-dashboard.heimdalsecurity.com/api/heimdalapi/darklayerguard
+        headers:
+          x-apikey: ${{ SECRETS.heimdall.HEIMDALL_API_KEY }}
+        params:
+          customer_id: ${{ SECRETS.heimdall.HEINDALK_CUSTOMER_ID }}
+          client_id: ${{ inputs.client_id }}
+
+  returns: ${{ ACTIONS.get_darklayer_alerts.result}}
+
