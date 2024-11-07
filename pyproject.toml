@@ -3,7 +3,7 @@ requires = ["hatchling >= 1.13.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "heimdall"
+name = "heimdallsecurity"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
