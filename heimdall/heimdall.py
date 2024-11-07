@@ -16,7 +16,7 @@ heimdall_secret = RegistrySecret(
     secrets=[heimdall_secret],
 )
 
-async def get_darklayer_alerts(clientInfoId: str) -> dict[str, Any]:
+async def get_darklayer_alerts(clientInfoId: int) -> dict[str, Any]:
     clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]
 
     secret = secrets.get("heimdall")
