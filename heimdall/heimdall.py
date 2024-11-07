@@ -1,4 +1,5 @@
 from typing import Annotated, Any
+from pydantic import Field
 from tracecat_registry import registry, RegistrySecret, secrets
 import httpx
 
@@ -15,10 +16,10 @@ heimdall_secret = RegistrySecret(
     secrets=[heimdall_secret],
 )
 
-async def get_darklayer_alerts(value: str) -> dict[str, Any]:
+async def get_darklayer_alerts(clientInfoId: str) -> dict[str, Any]:
     clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]
 
-    secret = await secrets.get("heimdall")
+    secret = secrets.get("heimdall")
     if secret is None:
         raise ValueError("Failed to retrieve 'heimdall' secret")
 
