@@ -24,7 +24,7 @@ async def get_darklayer_alerts(value: str) -> dict[str, Any]:
         response = await client.get(
             uri, 
             headers={"Authorization": f"Bearer {secret}"}
-#            params={"customerid": secret["HEIMDALL_CUSTOMER_ID"]}
+            params={"customerid": secret["HEIMDALL_CUSTOMER_ID"]}
         )
         response.raise_for_status()
         return response.json()
