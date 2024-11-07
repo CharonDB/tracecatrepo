@@ -16,7 +16,11 @@ heimdall_secret = RegistrySecret(
     secrets=[heimdall_secret],
 )
 
-async def get_darklayer_alerts(clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]) -> dict[str, Any]:
+async def get_darklayer_alerts(
+    clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")],
+    startDate: Annotated[str, Field(description="The start date for the query")],
+    endDate: Annotated[str, Field(description="The end date for the query")]
+    ) -> dict[str, Any]:
 
 
     uri = "https://rc-dashboard.heimdalsecurity.com/api/heimdalapi/darklayerguard"
@@ -27,6 +31,12 @@ async def get_darklayer_alerts(clientInfoId: Annotated[int | None, Field(descrip
 
     if clientInfoId:
         paramsjson["clientinfoid"] = clientInfoId
+    if startDate:
+        paramsjson["startdate"] = startDate
+    if endDate:
+        paramsjson["enddate"] = endDate
+
+    result = None
 
     async with httpx.AsyncClient() as client:
         response = await client.get(
@@ -35,6 +45,6 @@ async def get_darklayer_alerts(clientInfoId: Annotated[int | None, Field(descrip
             params=paramsjson
         )
         response.raise_for_status()
-        return response.json()
-    
-                                                       
+        result = response.json()
+
+    return result             
