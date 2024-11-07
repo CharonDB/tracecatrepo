@@ -18,8 +18,8 @@ heimdall_secret = RegistrySecret(
 
 async def get_darklayer_alerts(
     clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")],
-    startDate: Annotated[str, Field(description="The start date for the query")],
-    endDate: Annotated[str, Field(description="The end date for the query")]
+    startDate: Annotated[str | None, Field(description="The start date for the query")],
+    endDate: Annotated[str | None, Field(description="The end date for the query")]
     ) -> dict[str, Any]:
 
 
