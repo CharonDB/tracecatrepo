@@ -6,7 +6,7 @@ import httpx
 
 heimdall_secret = RegistrySecret(
     name = "heimdall",
-    keys = ["HEIMDALL_API_KEY", "HEIMDALL_CUSTOMER_ID"],)
+    keys = ["HEIMDALL_API_KEY", "HEIMDALL_CUSTOMER_ID"])
 
 
 @registry.register(
