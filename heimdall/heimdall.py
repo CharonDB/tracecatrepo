@@ -19,6 +19,9 @@ async def get_darklayer_alerts(value: str) -> dict[str, Any]:
     clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]
 
     secret = await secrets.get("heimdall")
+    if secret is None:
+        raise ValueError("Failed to retrieve 'heimdall' secret")
+
     uri = "https://rc-dashboard.heimdalsecurity.com/api/heimdalapi/darklayerguard"
     async with httpx.AsyncClient() as client:
         response = await client.get(
