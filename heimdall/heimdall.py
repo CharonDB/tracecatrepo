@@ -16,15 +16,23 @@ heimdall_secret = RegistrySecret(
     secrets=[heimdall_secret],
 )
 
-async def get_darklayer_alerts() -> dict[str, Any]:
-    clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]
+async def get_darklayer_alerts(clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]) -> dict[str, Any]:
+
 
     uri = "https://rc-dashboard.heimdalsecurity.com/api/heimdalapi/darklayerguard"
+
+    paramsjson = {
+        "customerid": secrets.get("HEIMDALL_CUSTOMER_ID"),
+    }
+
+    if clientInfoId:
+        paramsjson["clientinfoid"] = clientInfoId
+
     async with httpx.AsyncClient() as client:
         response = await client.get(
             uri, 
             headers={"Authorization": "Bearer "+secrets.get("HEIMDALL_API_KEY")},
-            params={"customerid": secrets.get("HEIMDALL_CUSTOMER_ID")}
+            params=paramsjson
         )
         response.raise_for_status()
         return response.json()
