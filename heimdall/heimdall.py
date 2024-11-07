@@ -6,7 +6,7 @@ import httpx
 
 heimdall_secret = RegistrySecret(
     name = "heimdall",
-    keys = ["HEIMDALL_API_KEY", "HEIMDALL_CUSTOMER_ID"])
+    keys = ["HEIMDALL_API_KEY", "HEIMDALL_CUSTOMER_ID"],)
 
 @registry.register(
     default_title="Get DarkLayer alerts",
@@ -19,7 +19,7 @@ heimdall_secret = RegistrySecret(
 async def get_darklayer_alerts(clientInfoId: int) -> dict[str, Any]:
     clientInfoId: Annotated[int | None, Field(description="The client ID (in case of querying a specific client)")]
 
-    secret = secrets.get("heimdall")
+    secret = await secrets.get("heimdall")
     if secret is None:
         raise ValueError("Failed to retrieve 'heimdall' secret")
 
